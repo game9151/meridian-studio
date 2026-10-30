@@ -1,0 +1,13 @@
+# Vercel (local link + build output)
+.vercel
+
+# design-taste-frontend inspection artifacts
+.taste-skill
+
+# raw source photos (the site references assets/img/* only)
+assets/*.jpg
+
+# OS / misc
+.DS_Store
+*.log
+node_modules

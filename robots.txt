@@ -1,0 +1,7 @@
+# Meridian Studio
+# NOTE: the site is intentionally noindex (meta robots) while private.
+# When ready to publish: remove the noindex meta tags AND confirm this file allows crawling.
+User-agent: *
+Allow: /
+
+Sitemap: https://meridianstudio.example/sitemap.xml

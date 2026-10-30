@@ -75,10 +75,24 @@
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <section class="hero" aria-labelledby="hero-head">
-    <!-- masthead: the signature before/after reveal fills the fold -->
-    <figure class="reveal" aria-labelledby="reveal-cap">
-      <div class="reveal__frame" id="reveal" tabindex="-1">
+  <section class="hero wrap" aria-labelledby="hero-head">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <h1 class="hero__head display lines" id="hero-head">
+          <span class="line-mask"><span style="--i:0">Websites that</span></span>
+          <span class="line-mask"><span style="--i:1">win you work.</span></span>
+        </h1>
+        <p class="hero__sub" data-fade>Good-looking, fast, and easy to use. See a free preview of your site before you spend a cent.</p>
+        <div class="hero__cta" data-fade>
+          <a class="button" href="#contact">Get a free preview</a>
+          <a class="link arrow-link" href="#work">See my work
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+          </a>
+        </div>
+        <p class="hero__note sidenote" data-fade><strong>Meridian Studio.</strong> Sydney-based, working Australia-wide. One maker, fixed prices, no jargon.</p>
+      </div>
+      <figure class="reveal hero__visual" data-fade aria-labelledby="reveal-cap">
+        <div class="reveal__frame" id="reveal" tabindex="-1">
         <div class="reveal__panel reveal__panel--after">
           <img class="reveal__shot" src="assets/img/work-barber.jpg" width="1280" height="800"
                alt="A real website for Northside Cuts: a dark hero with the shop name and a Book a chair button." fetchpriority="high">
@@ -114,28 +128,9 @@
                aria-label="Drag to compare the Instagram page with the real website">
       </div>
       <figcaption class="reveal__cap" id="reveal-cap">
-        <span>Drag the handle to compare: a barber's Instagram on the right, the real website I built on the left. Concept project.</span>
+        <span>Drag the handle: a barber's Instagram on the right, the real website I built on the left. Concept project.</span>
       </figcaption>
-    </figure>
-
-    <!-- headline + offer -->
-    <div class="hero__body wrap">
-      <div class="hero__side">
-        <p class="sidenote"><strong>Meridian Studio.</strong> Websites for local businesses. Sydney-based, working Australia-wide. One maker, fixed prices, no jargon.</p>
-      </div>
-      <div class="hero__main">
-        <h1 class="hero__head display lines" id="hero-head">
-          <span class="line-mask"><span style="--i:0">Websites that</span></span>
-          <span class="line-mask"><span style="--i:1">win you work.</span></span>
-        </h1>
-        <p class="hero__sub" data-fade>Good-looking, fast, and easy to use. See a free preview of your site before you spend a cent.</p>
-        <div class="hero__cta" data-fade>
-          <a class="button" href="#contact">Get a free preview</a>
-          <a class="link arrow-link" href="#work">See my work
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
-          </a>
-        </div>
-      </div>
+      </figure>
     </div>
   </section>
 

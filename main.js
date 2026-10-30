@@ -90,25 +90,6 @@
     var stop = function () { dragging = false; };
     frame.addEventListener('pointerup', stop);
     frame.addEventListener('pointercancel', stop);
-    // a gentle one-time nudge so visitors notice it is draggable
-    if (!reduce) {
-      var nudged = false;
-      var io2 = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting && !nudged) {
-            nudged = true; io2.disconnect();
-            var seq = [52, 60, 44, 52], k = 0;
-            var tick = function () {
-              if (k >= seq.length) return;
-              range.value = seq[k++]; apply();
-              setTimeout(tick, 420);
-            };
-            setTimeout(tick, 500);
-          }
-        });
-      }, { threshold: 0.5 });
-      io2.observe(frame);
-    }
   }
 
   /* ---- contact form (progressive AJAX) ---- */

@@ -18,17 +18,34 @@
     items.forEach(function (el, i) { el.style.setProperty('--i', (i % 6)); });
   });
 
-  /* ---- scroll reveals ---- */
+  /* ---- scroll reveals (content must NEVER stay hidden) ---- */
   var risers = Array.prototype.slice.call(document.querySelectorAll('[data-rise], [data-diagram]'));
-  if (reduce || !('IntersectionObserver' in window)) {
-    risers.forEach(function (el) { el.classList.add('is-in'); });
+  var reveal = function (el) { el.classList.add('is-in'); };
+  var revealAll = function () { risers.forEach(reveal); };
+  if (reduce) {
+    revealAll();
   } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    // 1) IntersectionObserver for nicely-timed entrances
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      risers.forEach(function (el) { io.observe(el); });
+    }
+    // 2) Scroll/resize fallback: reveal anything in view, even if the observer never fires
+    var check = function () {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      risers.forEach(function (el) {
+        if (el.classList.contains('is-in')) return;
+        var r = el.getBoundingClientRect();
+        if (r.top < vh * 0.9 && r.bottom > 0) reveal(el);
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
-    risers.forEach(function (el) { io.observe(el); });
+    };
+    check();
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    // 3) Ultimate failsafe: never leave content invisible
+    setTimeout(revealAll, 2600);
   }
 
   /* ---- hero: masked headline + fade-ups on load ---- */

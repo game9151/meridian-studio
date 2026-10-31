@@ -6,17 +6,22 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  /* ---- reveals (hiding is gated on .reveal-on, added here, so content shows if this script never runs) ---- */
-  document.documentElement.classList.add('reveal-on');
+  /* ---- reveals (inline-style driven, so they always apply and never stay stuck) ---- */
   var items = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
-  var show = function (el) { el.classList.add('in'); };
+  var show = function (el) { el.classList.add('in'); el.style.opacity = '1'; el.style.transform = 'none'; };
   if (reduce || !('IntersectionObserver' in window)) {
     items.forEach(show);
   } else {
+    items.forEach(function (el, i) {
+      el.style.transition = 'opacity .7s ease, transform .8s cubic-bezier(.22,1,.36,1)';
+      el.style.transitionDelay = ((i % 6) * 70) + 'ms';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+    });
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    items.forEach(function (el, i) { el.style.setProperty('--d', (i % 6)); io.observe(el); });
+    items.forEach(function (el) { io.observe(el); });
     var check = function () {
       var vh = window.innerHeight || document.documentElement.clientHeight;
       items.forEach(function (el) {

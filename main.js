@@ -3,6 +3,7 @@
 (function () {
   'use strict';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) document.documentElement.classList.add('anim'); // gates the reveal-hiding CSS
 
   /* ---- nav: solid once scrolled ---- */
   var nav = document.getElementById('nav');
@@ -73,7 +74,8 @@
       range.setAttribute('aria-valuetext', 'Showing ' + Math.round(v) + '% of the real website');
     };
     apply();
-    range.addEventListener('input', apply);
+    var markUsed = function () { frame.classList.add('is-used'); };
+    range.addEventListener('input', function () { apply(); markUsed(); });
     // drag anywhere on the frame (pointer), keyboard via the range input
     var dragging = false;
     var setFromX = function (x) {
@@ -83,7 +85,7 @@
     };
     frame.addEventListener('pointerdown', function (e) {
       if (e.target.closest && e.target.closest('a[href],button')) return;
-      dragging = true; try { frame.setPointerCapture(e.pointerId); } catch (x) {}
+      dragging = true; markUsed(); try { frame.setPointerCapture(e.pointerId); } catch (x) {}
       setFromX(e.clientX);
     });
     frame.addEventListener('pointermove', function (e) { if (dragging) setFromX(e.clientX); });

@@ -20,23 +20,31 @@
 <section class="hero">
   <img class="hero__img" src="../../assets/img/concept-cafe.jpg" width="1600" height="976" alt="A light, plant-filled cafe with a long communal table and timber staircase." fetchpriority="high" style="object-position:30% center;">
   <div class="wrap">
-    <h1>Good coffee, slow mornings.</h1>
+    <h1 data-reveal>Good coffee, slow mornings.</h1>
     <p>Single-origin beans, all-day breakfast and a leafy corner on King Street. Dine in, takeaway, or book a table for the weekend.</p>
-    <div class="hero__cta">
+    <div class="hero__cta" data-reveal>
       <a class="btn" href="#menu">See the menu</a>
       <a class="btn btn--ghost" href="#visit">Book a table</a>
     </div>
-    <div class="hero__info">
+    <div class="hero__info" data-reveal>
       <span><b>7am – 3pm</b>Every day</span>
       <span><b>King Street</b>Newtown NSW</span>
       <span><b>Dog friendly</b>Courtyard out back</span>
     </div>
   </div>
 </section>
+<section class="sec" id="stats"><div class="wrap">
+  <div class="stats">
+    <div data-reveal><div class="stat__n"><span data-count="300">0</span></div><div class="stat__l">Coffees a day</div></div>
+    <div data-reveal><div class="stat__n"><span data-count="8">0</span></div><div class="stat__l">Years on King St</div></div>
+    <div data-reveal><div class="stat__n"><span data-count="4.8" data-suffix="/5">0</span></div><div class="stat__l">Average Google rating</div></div>
+  </div>
+</div></section>
+
 
 <section class="sec sec--surface" id="menu"><div class="wrap">
-  <h2>Breakfast that earns the walk.</h2>
-  <div class="menu">
+  <h2 data-reveal>Breakfast that earns the walk.</h2>
+  <div class="menu" data-reveal>
     <div class="item"><div><h3>Smashed avo &amp; feta</h3><p>Sourdough, chilli, lemon, dukkah.</p></div><span class="price">$18</span></div>
     <div class="item"><div><h3>Bacon &amp; egg roll</h3><p>Milk bun, smoky bacon, house relish.</p></div><span class="price">$14</span></div>
     <div class="item"><div><h3>Big brekkie</h3><p>Eggs your way, bacon, mushroom, toast.</p></div><span class="price">$24</span></div>
@@ -48,7 +56,7 @@
 
 <section class="sec" id="hours"><div class="wrap split">
   <div>
-    <h2>Open every day, 7 till 3.</h2>
+    <h2 data-reveal>Open every day, 7 till 3.</h2>
     <ul class="hours">
       <li><span>Mon – Fri</span><span class="muted">7am – 3pm</span></li>
       <li><span>Sat – Sun</span><span class="muted">7:30am – 3pm</span></li>
@@ -56,7 +64,7 @@
     </ul>
   </div>
   <div class="bookbox" id="visit">
-    <h2>Book a table.</h2>
+    <h2 data-reveal>Book a table.</h2>
     <p style="margin-top:12px;max-width:34ch;">Groups of six or more on weekends, reserve a spot so you're not waiting with the queue.</p>
     <a class="btn" href="#">Reserve a table</a>
   </div>
@@ -66,5 +74,6 @@
   <span><b>Brightwater Cafe</b>, King Street, Newtown NSW</span>
   <span class="credit">Concept site by Meridian Studio. Photo by Toa Heftiba on Unsplash.</span>
 </div></footer>
+<script src="../concept.js" defer></script>
 </body>
 </html>

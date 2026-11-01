@@ -162,8 +162,10 @@
     if (reduce) { it.open = false; return; }
     p.style.height = p.scrollHeight + 'px';
     requestAnimationFrame(function () { p.style.height = '0px'; });
-    var end = function () { it.open = false; p.style.height = ''; p.removeEventListener('transitionend', end); };
+    var done = false;
+    var end = function () { if (done) return; done = true; it.open = false; p.style.height = ''; p.removeEventListener('transitionend', end); };
     p.addEventListener('transitionend', end);
+    setTimeout(end, 420);
   };
   faqItems.forEach(function (item) {
     var summary = item.querySelector('summary');
@@ -178,8 +180,10 @@
       var h = panel.scrollHeight;
       panel.style.height = '0px';
       requestAnimationFrame(function () { panel.style.height = h + 'px'; });
-      var end = function () { panel.style.height = ''; panel.removeEventListener('transitionend', end); };
+      var done = false;
+      var end = function () { if (done) return; done = true; panel.style.height = ''; panel.removeEventListener('transitionend', end); };
       panel.addEventListener('transitionend', end);
+      setTimeout(end, 420);
     });
   });
 })();

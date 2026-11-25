@@ -427,3 +427,37 @@ p + p { margin-top: 0.9em; }
   .ledger td.yr { color: var(--muted); font-size: var(--step-small); }
   .ledger td.status { text-align: left; }
 }
+
+/* ============================================================ WORK v2: portfolio of real demo builds
+   Hover a tile and the full page scrolls inside the frame. */
+.work__note { margin-top: 1rem; color: var(--muted); }
+.folio { margin-top: clamp(36px, 5vw, 72px); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(28px, 3vw, 44px) var(--gutter); }
+.ftile { display: block; grid-column: span 6; color: var(--ink); }
+.ftile--w7 { grid-column: span 7; } .ftile--w5 { grid-column: span 5; } .ftile--w4 { grid-column: span 4; } .ftile--w6 { grid-column: span 6; }
+.ftile__frame { display: block; transition: transform 400ms var(--ease-out); }
+.ftile__screen { display: block; position: relative; aspect-ratio: 16 / 10; container-type: size; }
+.device__screen .ftile__img { width: 100%; height: auto; object-fit: initial; transform: translateY(0); transition: transform 1100ms var(--ease-out); will-change: transform; }
+.ftile:hover .ftile__frame, .ftile:focus-visible .ftile__frame { transform: translateY(-6px); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ftile:hover .ftile__img, .ftile:focus-visible .ftile__img { transform: translateY(calc(-100% + 100cqh)); transition: transform 7s cubic-bezier(0.45, 0, 0.4, 1) 150ms; }
+}
+.ftile__cap { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 0.8rem; font-size: var(--step-small); }
+.ftile__cap .nm { font-weight: 500; font-size: var(--step-body); }
+.ftile__cap .mt { color: var(--muted); text-align: right; }
+.ftile__what { display: block; margin-top: 0.2rem; font-size: var(--step-small); color: var(--muted); max-width: 46ch; }
+.ftile:hover .nm { color: var(--accent); }
+.work__more { margin-top: clamp(36px, 5vw, 56px); }
+@media (max-width: 920px) {
+  .ftile, .ftile--w7, .ftile--w5, .ftile--w4, .ftile--w6 { grid-column: span 6; }
+}
+@media (max-width: 560px) {
+  .ftile, .ftile--w7, .ftile--w5, .ftile--w4, .ftile--w6 { grid-column: 1 / -1; }
+}
+.ftile--w4 .ftile__cap { flex-direction: column; gap: 0.15rem; }
+.ftile--w4 .ftile__cap .mt { text-align: left; }
+@media (max-width: 920px) { .ftile__cap { flex-direction: column; gap: 0.15rem; } .ftile__cap .mt { text-align: left; } }
+@media (max-width: 400px) {
+  .nav__menu-btn { padding: 0 0.7rem; }
+  .wordmark__text { font-size: 0.92em; }
+  .nav__in { gap: 0.6rem; }
+}

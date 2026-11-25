@@ -1,0 +1,11 @@
+{
+  "name": "meridian-studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:niches": "node tools/build-niches.mjs"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  }
+}

@@ -256,3 +256,84 @@ mark.fill { background: #f3dd8a; color: var(--ink); padding: 0 0.15em; font: inh
   .ripple { display: none; }
   .is-shake { animation: none; }
 }
+
+/* ============================================================
+   Hub page v2: hero with fanned demos (desktop only), trades,
+   comparison, price strip, how it works, FAQ, form
+   ============================================================ */
+.hub.nhero { padding-bottom: clamp(32px, 5vw, 72px); }
+.hubhero { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
+.hubhero__h { max-width: 16ch; }
+.hubhero__h .mask { display: block; }
+.hubhero .hub__lead { margin-top: 1.4rem; max-width: 40ch; }
+.hubhero .nhero__cta .link { font-weight: 500; }
+
+/* the fan: three demo screens, desktop only */
+.fan { display: none; }
+@media (min-width: 1000px) {
+  .hubhero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 4vw, 72px); min-height: calc(100svh - 180px); max-height: 760px; }
+  .fan { display: block; position: relative; height: clamp(360px, 34vw, 500px); perspective: 1600px; }
+  .fan__card { position: absolute; top: 50%; left: 50%; width: 78%; padding: 6px 6px 9px; border-radius: 12px; box-shadow: 0 30px 60px -30px rgba(20, 14, 8, 0.55); /* taste-skill-ignore: stacked screens need a depth cue */
+    transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(var(--rot)) scale(var(--s, 1));
+    transition: transform 700ms var(--ease-expo), box-shadow 300ms ease; }
+  .fan__card:nth-child(1) { --x: -18%; --y: -16%; --rot: -7deg; --s: 0.9; z-index: 1; }
+  .fan__card:nth-child(2) { --x: 0%; --y: 4%; --rot: 0deg; --s: 1; z-index: 3; }
+  .fan__card:nth-child(3) { --x: 20%; --y: -22%; --rot: 6deg; --s: 0.86; z-index: 2; }
+  .fan:hover .fan__card:nth-child(1) { --x: -30%; --y: -22%; --rot: -10deg; }
+  .fan:hover .fan__card:nth-child(3) { --x: 32%; --y: -28%; --rot: 9deg; }
+  .fan .fan__card:hover { --s: 1.04; z-index: 4; box-shadow: 0 40px 80px -30px rgba(20, 14, 8, 0.6); } /* taste-skill-ignore: lifted card */
+  .fan__tag { position: absolute; left: 14px; bottom: -14px; background: var(--ink); color: var(--paper); font-size: var(--step-small); font-weight: 500; padding: 0.3rem 0.7rem; opacity: 0; transform: translateY(6px); transition: opacity 250ms ease, transform 300ms var(--ease-out); }
+  .fan__card:hover .fan__tag { opacity: 1; transform: none; }
+  /* entrance: cards deal in one after another */
+  .anim .nhero .fan__card { --y: 40%; opacity: 0; }
+  .anim .nhero.is-in .fan__card { opacity: 1; transition: transform 1000ms var(--ease-expo), opacity 500ms ease, box-shadow 300ms ease; transition-delay: calc(var(--n) * 110ms + 450ms); }
+  .anim .nhero.is-in .fan__card:nth-child(1) { --y: -16%; }
+  .anim .nhero.is-in .fan__card:nth-child(2) { --y: 4%; }
+  .anim .nhero.is-in .fan__card:nth-child(3) { --y: -22%; }
+  .anim .nhero.is-in .fan:hover .fan__card:nth-child(1) { --y: -22%; }
+  .anim .nhero.is-in .fan:hover .fan__card:nth-child(3) { --y: -28%; }
+  .anim .nhero.is-in .fan .fan__card:hover { transition-delay: 0ms; }
+}
+
+/* trades list */
+.trades { padding-top: clamp(32px, 4vw, 64px); }
+.trades .head { max-width: 12ch; }
+.trades__note { align-self: end; color: var(--muted); }
+.trades .hub__list { margin-top: clamp(28px, 4vw, 48px); }
+
+/* comparison */
+.why .head { max-width: 12ch; }
+.why .lead { max-width: 38ch; }
+.compare { margin-top: clamp(36px, 5vw, 64px); display: grid; }
+.compare__row { display: grid; grid-template-columns: var(--axis) 1fr; column-gap: var(--gutter); padding: 1.1rem 1.1rem; align-items: baseline; }
+.compare__row:nth-child(even) { background: var(--surface); }
+.compare__row--head { font-size: var(--step-small); color: var(--muted); padding-block: 0.6rem; }
+.compare__a { color: var(--muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent); }
+.compare__b { font-weight: 500; }
+.compare__row:not(.compare__row--head) .compare__b { transition: transform var(--t-hover) var(--ease-out); }
+.compare__row:hover .compare__b { transform: translateX(4px); }
+.anim .compare__row.is-in .compare__a { animation: strike 700ms var(--ease-out) 250ms both; }
+@keyframes strike { from { text-decoration-color: transparent; } }
+
+/* price strip */
+.price--strip .price__in { display: grid; gap: clamp(28px, 4vw, 48px); }
+.deal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); margin: 0; }
+.deal dt { font-size: var(--step-small); color: #cbbfae; }
+.deal dd { margin: 0; }
+.deal .price__fig span { font-family: var(--font-text); font-weight: 400; font-size: var(--step-body); color: #cbbfae; letter-spacing: 0; }
+.price--strip .button { justify-self: start; }
+.anim .deal.is-in mark.fill { display: inline-block; animation: stamp 560ms var(--ease-expo) both; }
+.anim .deal.is-in > div:nth-child(2) mark.fill { animation-delay: 120ms; }
+.anim .deal.is-in > div:nth-child(3) mark.fill { animation-delay: 240ms; }
+
+.how__note { margin-top: 1.2rem; color: var(--muted); }
+select.input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 2.4rem; } /* taste-skill-ignore: drawn select chevron */
+
+@media (max-width: 760px) {
+  .compare__row { grid-template-columns: 1fr; row-gap: 0.3rem; padding: 0.9rem 1rem; }
+  .compare__row--head { display: none; }
+  .deal { grid-template-columns: 1fr; }
+}
+.hubhero__h { font-size: clamp(2.2rem, 0.9rem + 3.6vw, 4.1rem); max-width: none; }
+@media (min-width: 1000px) { .hubhero { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+.deal .price__fig { font-size: clamp(1.9rem, 0.6rem + 3.4vw, 4rem); }

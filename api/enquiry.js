@@ -5,7 +5,7 @@
 //   ENQUIRY_TO          optional, defaults to GMAIL_USER
 import nodemailer from 'nodemailer';
 
-const NICHES = new Set(['conveyancers', 'accountants', 'tree-services']);
+const NICHES = new Set(['conveyancers', 'accountants', 'tree-services', 'other']);
 const clip = (v, n) => String(v ?? '').trim().slice(0, n);
 
 export default async function handler(req, res) {

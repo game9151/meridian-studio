@@ -101,6 +101,53 @@ const steps = [
   ['After that', 'Care plan if you want it. If not, the site and the files are yours to keep.'],
 ];
 
+function enquirySection(n) {
+  return `
+  <section class="contact section wrap" id="enquire" aria-labelledby="enquire-head">
+    <div class="contact__grid">
+      <div class="contact__left">
+        <h2 class="contact__sentence" id="enquire-head" data-rise>Tell me about your ${esc(n.slug === 'tree-services' || n.slug === 'other' ? 'business' : 'practice')}. I'll send a preview.</h2>
+        <dl class="contact__meta" data-rise>
+          <div><dt>Email</dt><dd><a class="link" href="mailto:officialmeridianstudio@gmail.com">officialmeridianstudio@gmail.com</a></dd></div>
+          <div><dt>Based in</dt><dd>Sydney, working Australia-wide</dd></div>
+          <div><dt>Reply time</dt><dd>Within one business day</dd></div>
+        </dl>
+      </div>
+      <div class="contact__right" data-rise>
+        <form class="form" id="enquiry-form" action="/api/enquiry" method="POST" novalidate>
+          ${n.slug === 'other' ? tradeSelect : `<input type="hidden" name="niche" value="${esc(n.slug)}">`}
+          <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
+          <div class="form__row">
+            <label class="field-label"><span>Your name <span class="req" aria-hidden="true">*</span></span>
+              <input class="input" type="text" name="name" autocomplete="name" required maxlength="120">
+            </label>
+            <label class="field-label"><span>Business name</span>
+              <input class="input" type="text" name="business" autocomplete="organization" maxlength="160">
+            </label>
+          </div>
+          <div class="form__row">
+            <label class="field-label"><span>Email <span class="req" aria-hidden="true">*</span></span>
+              <input class="input" type="email" name="email" autocomplete="email" required maxlength="200">
+            </label>
+            <label class="field-label"><span>Phone</span>
+              <input class="input" type="tel" name="phone" autocomplete="tel" maxlength="40">
+            </label>
+          </div>
+          <label class="field-label"><span>Your current website, if you have one</span>
+            <input class="input" type="text" name="site" inputmode="url" maxlength="300" placeholder="e.g. yourbusiness.com.au">
+          </label>
+          <label class="field-label"><span>Anything I should know?</span>
+            <textarea class="textarea" name="message" rows="4" maxlength="4000"></textarea>
+          </label>
+          <p class="form__note">Your details are only used to reply to you about a website. They aren't shared or added to a mailing list. See the <a class="link" href="/privacy.html">privacy page</a>.</p>
+          <button class="button form__submit" type="submit"><span class="form__label">Send enquiry</span><span class="form__dots" aria-hidden="true"><i></i><i></i><i></i></span><svg class="form__tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
+          <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>`;
+}
+
 function nichePage(n) {
   const path = `/websites/${n.slug}/`;
   const jsonld = {
@@ -213,51 +260,30 @@ ${n.faq.map(([q, a]) => `        <details class="faq__item"><summary>${t(q)}<spa
     </div>
   </section>
 
-  <section class="contact section wrap" id="enquire" aria-labelledby="enquire-head">
-    <div class="contact__grid">
-      <div class="contact__left">
-        <h2 class="contact__sentence" id="enquire-head" data-rise>Tell me about your ${esc(n.slug === 'tree-services' ? 'business' : 'practice')}. I'll send a preview.</h2>
-        <dl class="contact__meta" data-rise>
-          <div><dt>Email</dt><dd><a class="link" href="mailto:officialmeridianstudio@gmail.com">officialmeridianstudio@gmail.com</a></dd></div>
-          <div><dt>Based in</dt><dd>Sydney, working Australia-wide</dd></div>
-          <div><dt>Reply time</dt><dd>Within one business day</dd></div>
-        </dl>
-      </div>
-      <div class="contact__right" data-rise>
-        <form class="form" id="enquiry-form" action="/api/enquiry" method="POST" novalidate>
-          <input type="hidden" name="niche" value="${esc(n.slug)}">
-          <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
-          <div class="form__row">
-            <label class="field-label"><span>Your name <span class="req" aria-hidden="true">*</span></span>
-              <input class="input" type="text" name="name" autocomplete="name" required maxlength="120">
-            </label>
-            <label class="field-label"><span>Business name</span>
-              <input class="input" type="text" name="business" autocomplete="organization" maxlength="160">
-            </label>
-          </div>
-          <div class="form__row">
-            <label class="field-label"><span>Email <span class="req" aria-hidden="true">*</span></span>
-              <input class="input" type="email" name="email" autocomplete="email" required maxlength="200">
-            </label>
-            <label class="field-label"><span>Phone</span>
-              <input class="input" type="tel" name="phone" autocomplete="tel" maxlength="40">
-            </label>
-          </div>
-          <label class="field-label"><span>Your current website, if you have one</span>
-            <input class="input" type="text" name="site" inputmode="url" maxlength="300" placeholder="e.g. yourbusiness.com.au">
-          </label>
-          <label class="field-label"><span>Anything I should know?</span>
-            <textarea class="textarea" name="message" rows="4" maxlength="4000"></textarea>
-          </label>
-          <p class="form__note">Your details are only used to reply to you about a website. They aren't shared or added to a mailing list. See the <a class="link" href="/privacy.html">privacy page</a>.</p>
-          <button class="button form__submit" type="submit"><span class="form__label">Send enquiry</span><span class="form__dots" aria-hidden="true"><i></i><i></i><i></i></span><svg class="form__tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
-          <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </div>
-  </section>
+  ${enquirySection(n)}
 ` + foot;
 }
+
+const tradeSelect = `<label class="field-label"><span>Your trade <span class="req" aria-hidden="true">*</span></span>
+            <select class="input" name="niche" required>
+${niches.map((n) => `              <option value="${n.slug}">${esc(n.nav)}</option>`).join('\n')}
+              <option value="other">Something else</option>
+            </select>
+          </label>`;
+
+const compare = [
+  ['A contact form', 'The tool your customers came for: a fee calculator, a quote form that takes photos, a list of BAS dates'],
+  ['Stock photos of handshakes', 'Your licence, insurance and registration numbers, where people go looking for them'],
+  ['Words written for anyone', 'The words your customers use, like cooling-off, income statement and stump grinding'],
+  ['A long form about your business', 'A short call and your price list. I already know how your trade gets work'],
+];
+
+const hubFaq = [
+  ['My trade isn\'t listed. Can you still help?', 'Yes. The standard packages work for any local business, and new trade pages get added as I build demos for them. Tell me your trade in the form below.'],
+  ['Are the demo businesses real?', 'No. Calloway, Tallowood and Stringybark are concept sites I built to show the standard. Their names, reviews and numbers are invented and say so on the site.'],
+  ['Will my site look exactly like the demo?', 'No. It uses the same tools and layout ideas, with your name, prices, colours and photos. Most people change a fair bit after seeing the preview.'],
+  ['What if I already have a website?', 'I rebuild it at the same address and redirect your old pages, so you keep what Google already knows about you.'],
+];
 
 function hubPage() {
   const path = '/websites/';
@@ -269,14 +295,29 @@ function hubPage() {
     title: 'Websites by trade: one fixed offer per type of business | Meridian Studio',
     description: 'Fixed-price websites built for one type of business at a time: Sydney conveyancers, accountants and tree services. Each with a working demo.',
     path, jsonld,
-  }).replace('href="#enquire">Ask about a site', 'href="/#contact">Get a free preview').replace('href="#enquire">Enquire', 'href="/#contact">Free preview') + `
-  <section class="hub wrap" aria-labelledby="hub-head">
-    <div class="axis hub__head">
-      <p class="side sidenote">Each page has a working demo, a fixed price and a list of exactly what's included.</p>
-      <div class="main">
-        <h1 class="display" id="hub-head">Websites built for one kind of business at a time.</h1>
-        <p class="lead hub__lead">A conveyancer needs a fee calculator. A tree crew needs a quote form that takes photos. Pick your trade to see what yours would have.</p>
+  }) + `
+  <section class="nhero hub wrap" aria-labelledby="hub-head">
+    <div class="hubhero">
+      <div class="hubhero__copy">
+        <h1 class="display hubhero__h" id="hub-head"><span class="mask"><span>Websites built for</span></span> <span class="mask"><span>one kind of business</span></span> <span class="mask nhero__h2"><span>at a time.</span></span></h1>
+        <div data-in>
+          <p class="lead hub__lead">A conveyancer needs a fee calculator. A tree crew needs a quote form that takes photos. Pick your trade to see what yours would have, with a working demo and a fixed price.</p>
+          <div class="nhero__cta">
+            <a class="button" href="#trades">Find your trade</a>
+            <a class="link" href="#enquire">Ask about another trade</a>
+          </div>
+        </div>
       </div>
+      <div class="fan" aria-hidden="true" data-in>
+${niches.map((n, i) => `        <a class="fan__card device" href="/websites/${n.slug}/" tabindex="-1" style="--n:${i}"><span class="device__screen"><img src="/assets/img/niche/${n.demo.img}-desktop.jpg" width="1440" height="900" alt="" fetchpriority="${i === 1 ? 'high' : 'auto'}"></span><span class="fan__tag">${esc(n.nav)}</span></a>`).join('\n')}
+      </div>
+    </div>
+  </section>
+
+  <section class="trades section wrap" id="trades" aria-labelledby="trades-head">
+    <div class="axis">
+      <h2 class="head side" id="trades-head" data-rise>Pick your trade.</h2>
+      <p class="main sidenote trades__note" data-rise>Each page shows the demo, the price, what's included and what I need from you.</p>
     </div>
     <ul class="hub__list">
 ${niches.map((n) => `      <li class="hub__item" data-rise>
@@ -291,9 +332,60 @@ ${niches.map((n) => `      <li class="hub__item" data-rise>
         </a>
       </li>`).join('\n')}
     </ul>
-    <p class="hub__else">Not on the list? The <a class="link" href="/#packages">standard packages</a> work for any local business, and you can <a class="link" href="/#contact">ask for a free preview</a>.</p>
+    <p class="hub__else">Not on the list? The <a class="link" href="/#packages">standard packages</a> work for any local business, or <a class="link" href="#enquire">tell me your trade</a>.</p>
   </section>
-` + foot.replace('<script src="/niche.js" defer></script>\n', '');
+
+  <section class="why section wrap" aria-labelledby="why-head">
+    <div class="axis">
+      <h2 class="head side" id="why-head" data-rise>Why one trade at a time.</h2>
+      <p class="lead main" data-rise>Most small business sites are one template with the name swapped. Building for one trade at a time means the site starts with the thing your customers are looking for.</p>
+    </div>
+    <div class="compare" role="table" aria-label="A general website compared with one built for your trade">
+      <div class="compare__row compare__row--head" role="row"><span role="columnheader">A general website</span><span role="columnheader">Built for your trade</span></div>
+${compare.map(([a, b]) => `      <div class="compare__row" role="row" data-rise><span class="compare__a" role="cell">${t(a)}</span><span class="compare__b" role="cell">${t(b)}</span></div>`).join('\n')}
+    </div>
+  </section>
+
+  <section class="price price--strip" aria-labelledby="deal-head">
+    <div class="wrap price__in">
+      <h2 class="head" id="deal-head" data-rise>Same deal for every trade.</h2>
+      <dl class="deal" data-rise>
+        <div><dt>The website</dt><dd class="price__fig">${t(offer.build)}</dd><dd class="price__sub">One-off, fixed</dd></div>
+        <div><dt>Care plan</dt><dd class="price__fig">${t(offer.care)}</dd><dd class="price__sub">A month, optional</dd></div>
+        <div><dt>Live in</dt><dd class="price__fig">${t(offer.days)} <span>days</span></dd><dd class="price__sub">Business days from your yes</dd></div>
+      </dl>
+      <a class="button button--light" href="#enquire">Ask about a site</a>
+    </div>
+  </section>
+
+  <section class="next section wrap" aria-labelledby="how-head">
+    <div class="axis">
+      <div class="side">
+        <h2 class="head" id="how-head" data-rise>How it works.</h2>
+        <p class="sidenote how__note" data-rise>No payment until you've seen a preview with your own name and prices on it.</p>
+      </div>
+      <div class="main">
+        <ol class="steps" data-steps>
+${steps.map(([w, b]) => `          <li data-rise><span class="steps__when">${t(w)}</span><p>${t(b.replace('the few things listed here', 'your prices and details'))}</p></li>`).join('\n')}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq section wrap" id="faq" aria-labelledby="faq-head">
+    <div class="faq__grid">
+      <div class="faq__head">
+        <h2 class="head" id="faq-head" data-rise>Before you pick.</h2>
+        <p class="faq__sub sidenote" data-rise>Trade-specific questions are on each trade's page.</p>
+      </div>
+      <div class="faq__list" data-rise>
+${hubFaq.map(([q, a]) => `        <details class="faq__item"><summary>${t(q)}<span class="faq__chev" aria-hidden="true"></span></summary><div class="faq__a"><p>${t(a)}</p></div></details>`).join('\n')}
+      </div>
+    </div>
+  </section>
+
+  ${enquirySection({ slug: 'other', nav: 'Other' })}
+` + foot;
 }
 
 const out = (p, html) => { const f = join(root, p); mkdirSync(dirname(f), { recursive: true }); writeFileSync(f, html); console.log('wrote', p); };
